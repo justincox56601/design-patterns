@@ -9,12 +9,13 @@ have decided to allows the users to have more than one notification
 preference.  
 
 Luckily for us, we have put ourself in a good position, so that we
-can make this happen fairly easily.
+can make this happen fairly easily by combining the factory pattern
+with the decorator pattern.
 
 first since we are changing the data assicated with the user, we
 need to update our UserObject.  We are going to add a field called
 notification_preferences.  This will be an array of enums.  NOTICE
-we are not removing the old preference or chaning it.  That may 
+we are not removing the old preference or changing it.  That may 
 be used in other pieces of code, and we are not refactoring at this 
 moment.
 
@@ -105,13 +106,12 @@ class MultiNotificationFactory(NotificationFactoryInterface):
 		return MultiNotificaiton(notifications)
 
 class Order:
-	def __init__(self, user:User, notifationFactory:NotificationFactoryInterface):
+	def __init__(self, user:User, notificationFactory:NotificationFactoryInterface):
 		self.user = user
-		self.notificationFactory = notifationFactory
+		self.notification = notificationFactory.create(self.user)
 
 	def notify_user(self, message)->None:
-		notification = self.notificationFactory.create(self.user)
-		notification.send(message)
+		self.notification.send(message)
 
 def main():
 	user = User()

@@ -67,13 +67,12 @@ class NotificationFactory(NotificationFactoryInterface):
 
 
 class Order:
-	def __init__(self, user:User, notifationFactory:NotificationFactoryInterface):
+	def __init__(self, user:User, notificationFactory:NotificationFactoryInterface):
 		self.user = user
-		self.notificationFactory = notifationFactory
+		self.notification = notificationFactory.create(self.user)
 
 	def notify_user(self, message)->None:
-		notification = self.notificationFactory.create(self.user)
-		notification.send(message)
+		self.notification.send(message)
 
 def main():
 	user = User()

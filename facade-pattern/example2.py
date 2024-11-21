@@ -34,7 +34,6 @@ class ColorPrinter:
 			#log timestamp, message_type, and message to log file
 			print("This was logged")
 
-
 class Logger:
 	RED = '31m'
 	GREEN = '32m'
